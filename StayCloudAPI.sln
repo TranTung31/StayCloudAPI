@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StayCloudAPI.Core", "src\StayCloudAPI.Core\StayCloudAPI.Core.csproj", "{E12CFA56-A42E-438B-B6FF-07A217A1F2FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StayCloudAPI.Infrastructure", "src\StayCloudAPI.Infrastructure\StayCloudAPI.Infrastructure.csproj", "{BC048D85-8922-49E8-A94C-8C94072C338F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StayCloudAPI.WebAPI", "src\StayCloudAPI.WebAPI\StayCloudAPI.WebAPI.csproj", "{09EF7487-7512-4AD4-8972-1E1D7E35D73E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StayCloudAPI.Application", "src\StayCloudAPI.Application\StayCloudAPI.Application.csproj", "{E17F3D8B-9520-4D20-8A8F-8A6142791BA4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E12CFA56-A42E-438B-B6FF-07A217A1F2FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E12CFA56-A42E-438B-B6FF-07A217A1F2FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E12CFA56-A42E-438B-B6FF-07A217A1F2FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E12CFA56-A42E-438B-B6FF-07A217A1F2FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC048D85-8922-49E8-A94C-8C94072C338F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC048D85-8922-49E8-A94C-8C94072C338F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC048D85-8922-49E8-A94C-8C94072C338F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC048D85-8922-49E8-A94C-8C94072C338F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09EF7487-7512-4AD4-8972-1E1D7E35D73E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09EF7487-7512-4AD4-8972-1E1D7E35D73E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09EF7487-7512-4AD4-8972-1E1D7E35D73E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09EF7487-7512-4AD4-8972-1E1D7E35D73E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E17F3D8B-9520-4D20-8A8F-8A6142791BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E17F3D8B-9520-4D20-8A8F-8A6142791BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E17F3D8B-9520-4D20-8A8F-8A6142791BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E17F3D8B-9520-4D20-8A8F-8A6142791BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9459CBA-E5D1-4C2D-BB16-18896C3007F9}
+	EndGlobalSection
+EndGlobal
