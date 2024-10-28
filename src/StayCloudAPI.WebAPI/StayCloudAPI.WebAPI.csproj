@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StayCloudAPI.Application\StayCloudAPI.Application.csproj" />
+    <ProjectReference Include="..\StayCloudAPI.Core\StayCloudAPI.Core.csproj" />
+    <ProjectReference Include="..\StayCloudAPI.Infrastructure\StayCloudAPI.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

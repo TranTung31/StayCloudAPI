@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using StayCloudAPI.Core.Domain.Entities;
 using StayCloudAPI.Core.Domain.Identity;
 
 namespace StayCloudAPI.Infrastructure
@@ -10,6 +11,9 @@ namespace StayCloudAPI.Infrastructure
         public StayCloudAPIDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
