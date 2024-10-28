@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StayCloudAPI.Application.Interfaces;
+using StayCloudAPI.Application.Interfaces.Content.IHotel;
+using StayCloudAPI.Application.Mappings;
 using StayCloudAPI.Core.Domain.Identity;
 using StayCloudAPI.Infrastructure;
+using StayCloudAPI.Infrastructure.Implements.Content.HotelImplement;
+using StayCloudAPI.Infrastructure.SeedWorks;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -39,6 +44,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add services scoped
+
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
