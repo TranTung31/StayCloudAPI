@@ -1,25 +1,24 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using StayCloudAPI.Application.DTOs;
-using StayCloudAPI.Application.DTOs.Content.HotelDto;
-using StayCloudAPI.Application.Interfaces.Content.IHotel;
+using StayCloudAPI.Application.DTOs.Content.RoomDto;
+using StayCloudAPI.Application.Interfaces.Content.IRoom;
 using StayCloudAPI.Core.Domain.Entities;
 using StayCloudAPI.Infrastructure.SeedWorks;
 
-namespace StayCloudAPI.Infrastructure.Implements.Content.HotelImplement
+namespace StayCloudAPI.Infrastructure.Implements.Content.RoomImplement
 {
-    public class HotelRepository : RepositoryBase<Hotel, Guid>, IHotelRepository
+    public class RoomRepository : RepositoryBase<Room, Guid>, IRoomRepository
     {
-        public HotelRepository(StayCloudAPIDbContext context, IMapper mapper) : base(context, mapper)
+        public RoomRepository(StayCloudAPIDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
-        public async Task<PagedResult<HotelResponseDto>> GetHotelsAsync(string? searchValue, int page = 1, int pageSize = 10)
+        public async Task<PagedResult<RoomResponseDto>> GetRoomsAll(string? searchValue, int page, int pageSize)
         {
             try
             {
-                var query = _context.Hotels.AsQueryable();
+                var query = _context.Rooms.AsQueryable();
 
                 if (!string.IsNullOrEmpty(searchValue))
                 {
@@ -32,21 +31,18 @@ namespace StayCloudAPI.Infrastructure.Implements.Content.HotelImplement
                         .Skip((page - 1) * pageSize)
                         .Take(pageSize);
 
-                var result = new PagedResult<HotelResponseDto>
+                return new PagedResult<RoomResponseDto>
                 {
                     PageIndex = page,
                     PageSize = pageSize,
                     TotalCount = totalCount,
-                    Results = await _mapper.ProjectTo<HotelResponseDto>(query).ToListAsync(),
+                    Results = await _mapper.ProjectTo<RoomResponseDto>(query).ToListAsync()
                 };
-
-                return result;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-
     }
 }

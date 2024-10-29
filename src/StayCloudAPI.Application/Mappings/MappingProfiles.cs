@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using StayCloudAPI.Application.DTOs.Content.Hotel;
+using StayCloudAPI.Application.DTOs.Content.HotelDto;
+using StayCloudAPI.Application.DTOs.Content.RoomDto;
 using StayCloudAPI.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StayCloudAPI.Application.Mappings
 {
@@ -16,6 +13,10 @@ namespace StayCloudAPI.Application.Mappings
             // Hotel
             CreateMap<Hotel, HotelRequestDto>().ReverseMap();
             CreateMap<Hotel, HotelResponseDto>().ReverseMap();
+
+            // Room
+            CreateMap<Room, RoomRequestDto>().ReverseMap();
+            CreateMap<Room, RoomResponseDto>().ReverseMap();
         }
     }
 }

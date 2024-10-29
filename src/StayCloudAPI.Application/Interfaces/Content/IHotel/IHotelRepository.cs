@@ -1,5 +1,5 @@
 ﻿using StayCloudAPI.Application.DTOs;
-using StayCloudAPI.Application.DTOs.Content.Hotel;
+using StayCloudAPI.Application.DTOs.Content.HotelDto;
 using StayCloudAPI.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
-﻿using StayCloudAPI.Core.Domain.Entities;
+﻿using StayCloudAPI.Application.DTOs.Content.RoomDto;
 
-namespace StayCloudAPI.Application.DTOs.Content.Hotel
+namespace StayCloudAPI.Application.DTOs.Content.HotelDto
 {
     public class HotelResponseDto
     {
@@ -14,6 +14,6 @@ namespace StayCloudAPI.Application.DTOs.Content.Hotel
         public string Description { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
-        public ICollection<Room> Rooms { get; set; } = new List<Room>();
+        public ICollection<RoomResponseDto> Rooms { get; set; } = new List<RoomResponseDto>();
     }
 }

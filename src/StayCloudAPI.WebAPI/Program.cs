@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StayCloudAPI.Application.Interfaces;
 using StayCloudAPI.Application.Interfaces.Content.IHotel;
+using StayCloudAPI.Application.Interfaces.Content.IRoom;
 using StayCloudAPI.Application.Mappings;
 using StayCloudAPI.Core.Domain.Identity;
 using StayCloudAPI.Infrastructure;
 using StayCloudAPI.Infrastructure.Implements.Content.HotelImplement;
+using StayCloudAPI.Infrastructure.Implements.Content.RoomImplement;
 using StayCloudAPI.Infrastructure.SeedWorks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +51,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
