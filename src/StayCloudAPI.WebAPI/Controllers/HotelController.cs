@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StayCloudAPI.Application.DTOs.Content.Hotel;
+using StayCloudAPI.Application.DTOs.Content.HotelDto;
 using StayCloudAPI.Application.Interfaces;
 using StayCloudAPI.Application.Interfaces.Content.IHotel;
 using StayCloudAPI.Core.Domain.Entities;
@@ -24,7 +25,7 @@ namespace StayCloudAPI.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHotelsAsync([FromQuery] string? searchValue, int page, int pageSize)
         {
-            var result = await _unitOfWork.Hotel.GetHotelsAsync(searchValue, page, pageSize);
+            var result = await _unitOfWork.Hotels.GetHotelsAsync(searchValue, page, pageSize);
             return Ok(new
             {
                 IsSuccess = true,
@@ -36,7 +37,7 @@ namespace StayCloudAPI.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetHotelByIdAsync(Guid id)
         {
-            var hotel = await _unitOfWork.Hotel.GetByIdAsync(id);
+            var hotel = await _unitOfWork.Hotels.GetByIdAsync(id);
 
             if (hotel == null) return NotFound();
 
@@ -48,7 +49,7 @@ namespace StayCloudAPI.WebAPI.Controllers
         {
             var hotelEntity = _mapper.Map<Hotel>(hotel);
 
-            _unitOfWork.Hotel.Add(hotelEntity);
+            _unitOfWork.Hotels.Add(hotelEntity);
 
             var result = await _unitOfWork.CompleteAsync();
 
@@ -58,7 +59,7 @@ namespace StayCloudAPI.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateHotelAsync(Guid id, [FromBody] HotelRequestDto hotelRequestDto)
         {
-            var hotel = await _unitOfWork.Hotel.GetByIdAsync(id);
+            var hotel = await _unitOfWork.Hotels.GetByIdAsync(id);
 
             if (hotel == null) return NotFound();
 
@@ -72,11 +73,11 @@ namespace StayCloudAPI.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotelAsync(Guid id)
         {
-            var hotel = await _unitOfWork.Hotel.GetByIdAsync(id);
+            var hotel = await _unitOfWork.Hotels.GetByIdAsync(id);
 
             if (hotel == null) return NotFound();
 
-            _unitOfWork.Hotel.Remove(hotel);
+            _unitOfWork.Hotels.Remove(hotel);
 
             var result = await _unitOfWork.CompleteAsync();
 

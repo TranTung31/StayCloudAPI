@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StayCloudAPI.Application.Interfaces;
+using System.Linq.Expressions;
 
 namespace StayCloudAPI.Infrastructure.SeedWorks
 {
@@ -47,6 +48,11 @@ namespace StayCloudAPI.Infrastructure.SeedWorks
         public void RemoveRange(IEnumerable<T> entities)
         {
             _dbSet.RemoveRange(entities);
+        }
+
+        public Task<IEnumerable<T>> Find(Expression<Func<T, bool>> expression)
+        {
+            throw new NotImplementedException();
         }
     }
 }

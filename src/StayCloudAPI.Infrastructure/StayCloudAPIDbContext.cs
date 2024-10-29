@@ -31,20 +31,24 @@ namespace StayCloudAPI.Infrastructure
                 .Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
+            DateTime utcNow = DateTime.UtcNow;
+            TimeZoneInfo gmtPlus7 = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            DateTime gmtPlus7Time = TimeZoneInfo.ConvertTimeFromUtc(utcNow, gmtPlus7);
+
             foreach (var entry in entries)
             {
                 var dateCreatedProp = entry.Entity.GetType().GetProperty("DateCreated");
 
                 if (entry.State == EntityState.Added && dateCreatedProp != null)
                 {
-                    dateCreatedProp.SetValue(entry.Entity, DateTime.UtcNow);
+                    dateCreatedProp.SetValue(entry.Entity, gmtPlus7Time);
                 }
 
                 var dateModifiedProp = entry.Entity.GetType().GetProperty("DateModified");
 
                 if (entry.State == EntityState.Modified && dateModifiedProp != null)
                 {
-                    dateModifiedProp.SetValue(entry.Entity, DateTime.UtcNow);
+                    dateModifiedProp.SetValue(entry.Entity, gmtPlus7Time);
                 }
             }
 

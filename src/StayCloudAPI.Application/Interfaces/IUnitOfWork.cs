@@ -1,15 +1,13 @@
 ﻿using StayCloudAPI.Application.Interfaces.Content.IHotel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StayCloudAPI.Application.Interfaces.Content.IRoom;
 
 namespace StayCloudAPI.Application.Interfaces
 {
-    public interface IUnitOfWork
+    // Gói tất cả repositories vào object duy nhất, để có thể sử dụng ở nhiều nơi
+    public interface IUnitOfWork : IDisposable
     {
-        IHotelRepository Hotel { get; }
+        IHotelRepository Hotels { get; }
+        IRoomRepository Rooms { get; }
         Task<int> CompleteAsync();
     }
 }
