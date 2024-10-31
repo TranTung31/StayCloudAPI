@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StayCloudAPI.Application.Interfaces;
+using StayCloudAPI.Application.Interfaces.Content.IAuth;
 using StayCloudAPI.Application.Interfaces.Content.IHotel;
 using StayCloudAPI.Application.Interfaces.Content.IRoom;
 using StayCloudAPI.Application.Mappings;
+using StayCloudAPI.Core.ConfigOptions;
 using StayCloudAPI.Core.Domain.Identity;
 using StayCloudAPI.Infrastructure;
+using StayCloudAPI.Infrastructure.Implements.Content.AuthImplement;
 using StayCloudAPI.Infrastructure.Implements.Content.HotelImplement;
 using StayCloudAPI.Infrastructure.Implements.Content.RoomImplement;
 using StayCloudAPI.Infrastructure.SeedWorks;
@@ -47,17 +50,30 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add services scoped
-
+// Add AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
+// Add configure
+builder.Services.Configure<JwtTokenSettings>(configuration.GetSection("JwtTokenSettings"));
+
+// Add services scoped
+builder.Services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
+builder.Services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+if (app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

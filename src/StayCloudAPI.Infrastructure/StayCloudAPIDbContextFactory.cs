@@ -15,7 +15,11 @@ namespace StayCloudAPI.Infrastructure
 
             var builder = new DbContextOptionsBuilder<StayCloudAPIDbContext>();
 
-            builder.UseSqlServer(configuration.GetConnectionString("StayCloudDB"));
+            builder.UseSqlServer(
+                !string.IsNullOrEmpty(configuration.GetConnectionString("StayCloudDB")) ?
+                configuration.GetConnectionString("StayCloudDB") : 
+                "Data Source=DESKTOP-C4RFBLF\\SQLEXPRESS;Initial Catalog=StayCloudDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"
+                );
 
             return new StayCloudAPIDbContext(builder.Options);
         }
