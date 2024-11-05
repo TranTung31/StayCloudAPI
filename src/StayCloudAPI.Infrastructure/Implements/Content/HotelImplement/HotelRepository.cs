@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StayCloudAPI.Application.DTOs;
 using StayCloudAPI.Application.DTOs.Content.HotelDto;
+using StayCloudAPI.Application.Interfaces.Content.ICloudinary;
 using StayCloudAPI.Application.Interfaces.Content.IHotel;
 using StayCloudAPI.Core.Domain.Entities;
 using StayCloudAPI.Infrastructure.SeedWorks;
@@ -11,7 +12,9 @@ namespace StayCloudAPI.Infrastructure.Implements.Content.HotelImplement
 {
     public class HotelRepository : RepositoryBase<Hotel, Guid>, IHotelRepository
     {
-        public HotelRepository(StayCloudAPIDbContext context, IMapper mapper) : base(context, mapper)
+        public HotelRepository(
+            StayCloudAPIDbContext context, IMapper mapper
+            ) : base(context, mapper)
         {
         }
 

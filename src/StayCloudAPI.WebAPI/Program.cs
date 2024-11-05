@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StayCloudAPI.Application.Interfaces;
 using StayCloudAPI.Application.Interfaces.Content.IAuth;
+using StayCloudAPI.Application.Interfaces.Content.ICloudinary;
 using StayCloudAPI.Application.Interfaces.Content.IHotel;
 using StayCloudAPI.Application.Interfaces.Content.IRoom;
 using StayCloudAPI.Application.Mappings;
@@ -9,6 +10,7 @@ using StayCloudAPI.Core.ConfigOptions;
 using StayCloudAPI.Core.Domain.Identity;
 using StayCloudAPI.Infrastructure;
 using StayCloudAPI.Infrastructure.Implements.Content.AuthImplement;
+using StayCloudAPI.Infrastructure.Implements.Content.CloudinaryImplement;
 using StayCloudAPI.Infrastructure.Implements.Content.HotelImplement;
 using StayCloudAPI.Infrastructure.Implements.Content.RoomImplement;
 using StayCloudAPI.Infrastructure.SeedWorks;
@@ -55,10 +57,12 @@ builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 // Add configure
 builder.Services.Configure<JwtTokenSettings>(configuration.GetSection("JwtTokenSettings"));
+builder.Services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
 
 // Add services scoped
 builder.Services.AddScoped<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddScoped<UserManager<AppUser>, UserManager<AppUser>>();
+builder.Services.AddScoped<ICloudinaryRepository, CloudinaryRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
