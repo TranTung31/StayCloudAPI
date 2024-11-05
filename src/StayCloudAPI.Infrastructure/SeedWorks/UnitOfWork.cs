@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StayCloudAPI.Application.Interfaces;
+using StayCloudAPI.Application.Interfaces.Content.ICloudinary;
 using StayCloudAPI.Application.Interfaces.Content.IHotel;
 using StayCloudAPI.Application.Interfaces.Content.IRoom;
 using StayCloudAPI.Infrastructure.Implements.Content.HotelImplement;
@@ -13,11 +14,11 @@ namespace StayCloudAPI.Infrastructure.SeedWorks
         public IHotelRepository Hotels { get; private set; }
         public IRoomRepository Rooms { get; private set; }
 
-        public UnitOfWork(StayCloudAPIDbContext context, IMapper mapper)
+        public UnitOfWork(StayCloudAPIDbContext context, ICloudinaryRepository cloudinaryRepository, IMapper mapper)
         {
             _context = context;
             Hotels = new HotelRepository(context, mapper);
-            Rooms = new RoomRepository(context, mapper);
+            Rooms = new RoomRepository(context, cloudinaryRepository, mapper);
         }
 
         public async Task<int> CompleteAsync()

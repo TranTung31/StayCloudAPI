@@ -1,9 +1,4 @@
-﻿using StayCloudAPI.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace StayCloudAPI.Application.DTOs.Content.Hotel
 {
@@ -13,7 +8,7 @@ namespace StayCloudAPI.Application.DTOs.Content.Hotel
         public required string Address { get; set; }
         public required string City { get; set; }
         public float Rating { get; set; }
-        public string ImageUrl { get; set; } = string.Empty;
+        public List<IFormFile> ImageUrl { get; set; } = new List<IFormFile>();
         public int RoomCount { get; set; }
         public string Description { get; set; } = string.Empty;
     }

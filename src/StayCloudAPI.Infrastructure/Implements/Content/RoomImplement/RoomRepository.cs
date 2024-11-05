@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StayCloudAPI.Application.DTOs;
 using StayCloudAPI.Application.DTOs.Content.RoomDto;
+using StayCloudAPI.Application.Interfaces.Content.ICloudinary;
 using StayCloudAPI.Application.Interfaces.Content.IRoom;
 using StayCloudAPI.Core.Domain.Entities;
 using StayCloudAPI.Infrastructure.SeedWorks;
@@ -10,8 +11,13 @@ namespace StayCloudAPI.Infrastructure.Implements.Content.RoomImplement
 {
     public class RoomRepository : RepositoryBase<Room, Guid>, IRoomRepository
     {
-        public RoomRepository(StayCloudAPIDbContext context, IMapper mapper) : base(context, mapper)
+        private readonly ICloudinaryRepository _cloudinaryRepository;
+
+        public RoomRepository(
+            StayCloudAPIDbContext context, ICloudinaryRepository cloudinaryRepository, IMapper mapper
+            ) : base(context, mapper)
         {
+            _cloudinaryRepository = cloudinaryRepository;
         }
 
         public async Task<PagedResult<RoomResponseDto>> GetRoomsAll(string? searchValue, int page, int pageSize)
