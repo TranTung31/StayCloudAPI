@@ -7,8 +7,11 @@ using StayCloudAPI.Application.Interfaces.Content.IAuth;
 using StayCloudAPI.Core.Constants;
 using StayCloudAPI.Core.Domain.Identity;
 using StayCloudAPI.Infrastructure;
+using StayCloudAPI.WebAPI.Extensions;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace StayCloudAPI.WebAPI.Controllers
 {
@@ -19,17 +22,20 @@ namespace StayCloudAPI.WebAPI.Controllers
         private readonly StayCloudAPIDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly ITokenRepository _tokenRepository;
 
         public AuthController(
             StayCloudAPIDbContext context,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
+            RoleManager<AppRole> roleManager,
             ITokenRepository tokenRepository)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _tokenRepository = tokenRepository;
         }
 
@@ -78,6 +84,7 @@ namespace StayCloudAPI.WebAPI.Controllers
 
             // Authorization
             var roles = await _userManager.GetRolesAsync(user);
+            var permissions = await this.GetPermissionsByUserIdAsync(user.Id.ToString());
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Email, !string.IsNullOrEmpty(user.Email) ? user.Email : ""),
@@ -85,6 +92,7 @@ namespace StayCloudAPI.WebAPI.Controllers
                 new Claim(UserClaims.Name, !string.IsNullOrEmpty(user.UserName) ? user.UserName : ""),
                 new Claim(UserClaims.FirstName, user.FirstName),
                 new Claim(UserClaims.Roles, string.Join(";", roles)),
+                new Claim(UserClaims.Permissions, JsonSerializer.Serialize(permissions)),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -101,6 +109,37 @@ namespace StayCloudAPI.WebAPI.Controllers
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
             });
+        }
+
+        private async Task<List<string>> GetPermissionsByUserIdAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var roles = await _userManager.GetRolesAsync(user);
+            var permissions = new List<string>();
+            var allPermissions = new List<RoleClaimsDto>();
+
+            if (roles.Contains(Roles.Admin))
+            {
+                var types = typeof(Permissions).GetTypeInfo().DeclaredNestedTypes;
+
+                foreach (var type in types)
+                {
+                    allPermissions.GetPermissions(type);
+                }
+
+                permissions.AddRange(allPermissions.Select(x => x.Value));
+            } else
+            {
+                foreach (var roleName in roles)
+                {
+                    var role = await _roleManager.FindByNameAsync(roleName);
+                    var claims = await _roleManager.GetClaimsAsync(role);
+                    var roleClaimValues = claims.Select(x => x.Value).ToList();
+                    permissions.AddRange(roleClaimValues);
+                }
+            }
+
+            return permissions.Distinct().ToList();
         }
     }
 }

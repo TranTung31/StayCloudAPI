@@ -10,6 +10,7 @@ using StayCloudAPI.Application.Interfaces;
 using StayCloudAPI.Application.Interfaces.Content.ICloudinary;
 using StayCloudAPI.Application.Interfaces.Content.IHotel;
 using StayCloudAPI.Core.Domain.Entities;
+using StayCloudAPI.WebAPI.Extensions;
 
 namespace StayCloudAPI.WebAPI.Controllers
 {
@@ -77,7 +78,7 @@ namespace StayCloudAPI.WebAPI.Controllers
 
             if (!string.IsNullOrEmpty(hotel.ImageUrl))
             {
-                var lstFileNames = ConvertLstUrls(hotel.ImageUrl.Split(",").ToList());
+                var lstFileNames = ConvertLstUrlsExtensions.ConvertLstUrls(hotel.ImageUrl.Split(",").ToList());
                 await _cloudinaryRepository.DeleteImages(lstFileNames);
             }
 
@@ -106,7 +107,7 @@ namespace StayCloudAPI.WebAPI.Controllers
 
             if (!string.IsNullOrEmpty(hotel.ImageUrl))
             {
-                var lstImages = ConvertLstUrls(hotel.ImageUrl.Split(",").ToList());
+                var lstImages = ConvertLstUrlsExtensions.ConvertLstUrls(hotel.ImageUrl.Split(",").ToList());
                 await _cloudinaryRepository.DeleteImages(lstImages);
             }
 
@@ -115,20 +116,6 @@ namespace StayCloudAPI.WebAPI.Controllers
             var result = await _unitOfWork.CompleteAsync();
 
             return result > 0 ? Ok(result) : BadRequest();
-        }
-
-        public static List<string> ConvertLstUrls(List<string> lstUrls)
-        {
-            var result = new List<string>();
-
-            foreach (var url in lstUrls)
-            {
-                var fileType = url.Split("/")[^1];
-                var fileName = fileType.Split(".")[0];
-                result.Add(fileName);
-            }
-
-            return result;
         }
     }
 }
