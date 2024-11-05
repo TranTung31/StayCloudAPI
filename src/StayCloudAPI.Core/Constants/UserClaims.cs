@@ -6,5 +6,6 @@
         public const string Name = "name";
         public const string FirstName = "firstName";
         public const string Roles = "roles";
+        public const string Permissions = "permissions";
     }
 }
