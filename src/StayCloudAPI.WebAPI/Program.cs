@@ -16,8 +16,12 @@ using StayCloudAPI.Infrastructure.Implements.Content.RoomImplement;
 using StayCloudAPI.Infrastructure.SeedWorks;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("StayCloudDB");
+
+configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true);
 
 #region Config custom
 builder.Services.AddDbContext<StayCloudAPIDbContext>(options => 
@@ -82,6 +86,12 @@ if (app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials());
 
 app.UseHttpsRedirection();
 
